@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <link rel="stylesheet" href="./Drum.css">
+        <title>JS Drum Kit</title>
+    </head>
+    <body>
+        <nav>
+            <img src="./CARP_logo_transparent.png" alt="CARP Logo">
+            <div>Press the key associated with each button or use the mouse to click the button to play the DRUMS!!</div>
+        </nav>
+        <main class="keys">
+            <button data-key="65" class="buttons" onclick="clk('65')">
+                <kbd class="key">A</kbd>
+                <span class="drumtype">Clap</span>
+            </button>
+            <button data-key="83" class="buttons" id="83" onclick="clk(83)">
+                <kbd class="key">S</kbd>
+                <span class="drumtype">Hihat</span>
+            </button>
+            <button data-key="68" class="buttons" onclick="clk(68)">
+                <span class="key">D</span>
+                <span class="drumtype">Kick</span>
+            </button>
+            <button data-key="70" class="buttons" onclick="clk(70)">
+                <span class="key">F</span>
+                <span class="drumtype">Openhat</span>
+            </button>
+            <button data-key="71" class="buttons" onclick="clk(71)">
+                <span class="key">G</span>
+                <span class="drumtype">Boom</span>
+            </button>
+            <button data-key="72" class="buttons" onclick="clk(72)">
+                <span class="key">H</span>
+                <span class="drumtype">Ride</span>
+            </button>
+            <button data-key="74" class="buttons" onclick="clk(74)">
+                <span class="key">J</span>
+                <span class="drumtype">Snare</span>
+            </button>
+            <button data-key="75" class="buttons" onclick="clk(75)">
+                <span class="key">K</span>
+                <span class="drumtype">Tom</span>
+            </button>
+            <button data-key="76" class="buttons" onclick="clk(76)">
+                <kbd>L</kbd>
+                <span class="drumtype">Tink</span>
+            </button>
+
+            
+            
+        </main>
+
+        <audio src="./sounds/clap.wav" data-key="65"></audio>
+        <audio src="./sounds/hihat.wav" data-key="83"></audio>
+        <audio src="./sounds/kick.wav" data-key="68"></audio>
+        <audio src="./sounds/openhat.wav" data-key="70"></audio>
+        <audio src="./sounds/boom.wav" data-key="71"></audio>
+        <audio src="./sounds/ride.wav" data-key="72"></audio>
+        <audio src="./sounds/snare.wav" data-key="74"></audio>
+        <audio src="./sounds/tom.wav" data-key="75"></audio>
+        <audio src="./sounds/tink.wav" data-key="76"></audio>
+        
+
+        <script>
+            window.addEventListener('keydown', function(e) {
+                const audio = document.querySelector(`audio[data-key="${e.keyCode}"]`);
+                const key = document.querySelector(`.buttons[data-key="${e.keyCode}"]`);
+                if (!audio) return;
+                audio.currentTime = 0;
+                audio.play();
+                key.classList.add('playing')
+            });
+
+            window.addEventListener('keyup', function(e) {
+                const keyu = document.querySelector(`.buttons[data-key="${e.keyCode}"]`);
+                keyu.classList.remove('playing');
+            });
+
+            
+            function clk(num) {
+                const keyc = document.querySelector(`button[data-key="${num}"]`);
+                keyc.classList.add('playing'); 
+
+                const audio = document.querySelector(`audio[data-key="${num}"]`);
+                if (!audio) return;
+                audio.currentTime = 0;
+                audio.play();
+
+                document.querySelector(`audio[data-key="${num}"]`).addEventListener('ended', (e) => {
+                    keyc.classList.remove('playing');
+                });
+            };
+
+            
+            
+                
+        </script>
+    </body>
+</html>
